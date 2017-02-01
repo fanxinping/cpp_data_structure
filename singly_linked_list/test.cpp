@@ -76,7 +76,7 @@ int main(void)
 	cout << "Print list: " << endl;
 	students.PrintSLList();
 
-	cout << "The first elem is: " << students.Front();
+	cout << "The first elem is: " << students.Front() << endl;
 
 	cout << "remove item(name: Tom socre: 80)\n";
 	if (students.Remove(student(80,"Tom")))

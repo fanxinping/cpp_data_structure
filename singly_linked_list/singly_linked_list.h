@@ -57,7 +57,7 @@ private:
 template <typename E>
 void SLinkedList<E>::PrintSNode(SNode<E> * cur) 
 {
-	std::cout << cur->elem << endl;
+	std::cout << cur->elem << std::endl;
 }
 
 template <typename E>
