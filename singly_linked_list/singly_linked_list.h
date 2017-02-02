@@ -21,6 +21,13 @@ public:
 		:SLListException(err) {}
 };
 
+class OutOfMemory : public SLListException
+{
+public:
+	OutOfMemory(const std::string & err)
+		:SLListException(err) {}
+};
+
 template <typename E>
 class SLinkedList;
 
@@ -41,7 +48,7 @@ public:
 	~SLinkedList();
 	bool IsEmpty() const;
 	const E& Front() const;
-	void Add(const E& elem);
+	void Add(const E& elem) throw(OutOfMemory);
 	bool Remove(const E& elem) throw(EmptySLList);
 	void PrintSLList();
 private:
@@ -106,7 +113,7 @@ const E& SLinkedList<E>::Front() const
 
 /*add elem in ascending order, need operation '<' for elem*/
 template <typename E>
-void SLinkedList<E>::Add(const E& elem)
+void SLinkedList<E>::Add(const E& elem) throw(OutOfMemory)
 {
 	SNode<E> * cur;
 	SNode<E> * temp;
@@ -116,6 +123,8 @@ void SLinkedList<E>::Add(const E& elem)
 		link = &cur->next;
 	}
 	temp = new SNode<E>;
+    if(temp == nullptr)
+        throw OutOfMemory("Fail to create SNode: out of memroy");
 	temp->elem = elem;
 	temp->next = cur;
 	*link = temp;
