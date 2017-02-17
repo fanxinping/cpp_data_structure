@@ -44,6 +44,36 @@ template <typename E>
 class SLinkedList
 {
 public:
+	class Iterator
+	{
+	public:
+		friend class SLinkedList<E>;
+		Iterator(SNode<E> * p = nullptr)
+		{current = p;}
+		Iterator(const Iterator &other)
+		{current = other.current;}
+		Iterator& operator++()
+		{
+			current = current->next;
+			return *this;
+		}
+		Iterator& operator++(int)
+		{
+			Iterator temp = *this;
+			++(*this);
+			return temp;
+		}
+		SNode<E> * operator->()
+		{ return current;}
+		E& operator*()
+		{ return current->elem;}
+		bool operator==(const Iterator &rhs)const
+		{ return current == rhs.current;}
+		bool operator!=(const Iterator &rhs)const
+		{ return !(*this == rhs);}
+	private:
+		SNode<E> * current;
+	};
 	SLinkedList();
 	~SLinkedList();
 	bool IsEmpty() const;
@@ -51,8 +81,17 @@ public:
 	void Add(const E& elem) throw(OutOfMemory);
 	bool Remove(const E& elem) throw(EmptySLList);
 	void PrintSLList();
+	Iterator begin()const
+	{
+		return Iterator(head);
+	}
+	Iterator end()const
+	{
+		return Iterator(tail);
+	}
 private:
 	SNode<E> * head;
+	SNode<E> * tail;
 	void PrintSNode(SNode<E> * cur);
 	void DeleteSNode(SNode <E> * cur);
 	void TraverseSLList(void(SLinkedList<E>::*func)(SNode<E> * cur));
@@ -90,13 +129,13 @@ void SLinkedList<E>::TraverseSLList(void(SLinkedList<E>::*func)(SNode<E> * cur))
 
 //public methods for Class SLinkedList
 template <typename E>
-SLinkedList<E>::SLinkedList() :head(nullptr) {}
+SLinkedList<E>::SLinkedList() :head(nullptr),tail(nullptr) {}
 
 template <typename E>
 SLinkedList<E>::~SLinkedList()
 {
 	TraverseSLList(&SLinkedList<E>::DeleteSNode);
-	head = nullptr;
+	head = tail = nullptr;
 }
 
 template <typename E>

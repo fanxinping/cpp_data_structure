@@ -29,6 +29,12 @@ int main(void)
 	cout << "print list\n";
 	num.PrintSLList();
 	cout << endl;
+	cout << "test Iterator in list" << endl;
+
+	SLinkedList<int>::Iterator it = num.begin();
+	for(;it != num.end();++it)
+		cout << *it << endl;
+
 	cout << "The first num in list is " << num.Front() << endl;
 
 	cout << "remove num 5\n";
@@ -75,6 +81,11 @@ int main(void)
 	students.Add(student(75, "Tim"));
 	cout << "Print list: " << endl;
 	students.PrintSLList();
+
+	cout << "Test Iterator in list" << endl;
+	SLinkedList<student>::Iterator st = students.begin();
+	for(;st != students.end();++st)
+		cout << *st << endl;
 
 	cout << "The first elem is: " << students.Front() << endl;
 
